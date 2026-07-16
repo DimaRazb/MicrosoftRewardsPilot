@@ -1,5 +1,5 @@
 # Use an official Node.js runtime as a base image
-FROM node:18
+FROM node:20
 
 # Set the working directory in the container
 WORKDIR /usr/src/microsoftrewardspilot
@@ -39,7 +39,7 @@ RUN apt-get update && apt-get install -y \
 COPY . .
 
 # Install dependencies, set permissions, and build the script
-RUN npm install && \
+RUN npm install --legacy-peer-deps && \
     chmod -R 755 /usr/src/microsoftrewardspilot/node_modules && \
     npm run pre-build && \
     npm run build
