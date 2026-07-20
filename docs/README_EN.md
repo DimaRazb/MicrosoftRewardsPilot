@@ -70,6 +70,9 @@ docker compose up -d
 
 # 4. View Logs (Optional)
 docker logs -f microsoftrewardspilot
+
+#5. Manual start
+npm run ts-start
 ```
 
 **Docker Compose Configuration Example:**
@@ -86,7 +89,7 @@ services:
       - ./sessions:/usr/src/microsoftrewardspilot/sessions  # Persist login sessions
     environment:
       - NODE_ENV=production
-      - TZ=Asia/Tokyo  # Set according to geographic location
+      - TZ=America/Denver  # Set according to geographic location
       - CRON_SCHEDULE=0 9,16 * * *  # Prefer odd / non-round / spread-out hours instead of 9,16, to avoid hitting the same instant every day; run_daily.sh additionally layers on 3-85 min of random jitter
       - RUN_ON_START=true  # Run once immediately on container startup
       # Anti-detection: enable rebrowser's Runtime.enable fix (src/rebrowser-env.ts already ships defaults; declared explicitly here for easy override)
