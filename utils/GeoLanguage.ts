@@ -85,7 +85,6 @@ export class GeoLanguageDetector {
         try {
             // 地理位置服务列表（按优先级排序）
             const geoServices = [
-                'https://ipapi.co/json',
                 'https://ipinfo.io/json',
                 'https://freegeoip.app/json/'
             ]
