@@ -991,7 +991,12 @@ export class Login {
     private async checkBingLogin(page: Page): Promise<void> {
         try {
             this.bot.log(this.bot.isMobile, 'LOGIN-BING', 'Verifying Bing login')
-            await page.goto('https://www.bing.com/fd/auth/signin?action=interactive&provider=windows_live_id&return_url=https%3A%2F%2Fwww.bing.com%2F')
+            await page.goto('https://www.bing.com/fd/auth/signin?action=interactive&provider=windows_live_id&return_url=https%3A%2F%2Fwww.bing.com%2F', {
+                waitUntil: 'commit',
+                timeout: 30000
+            }).catch(() => {})
+
+            await page.waitForTimeout(5000)
 
             const maxIterations = 5
             let verified = false
