@@ -1,0 +1,42 @@
+name: Build, Scan and Push
+
+on:
+  push:
+    branches:
+      - v4
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_PAT }}
+
+      - name: Build image
+        run: |
+          docker build \
+            -t ghcr.io/dimarazb/microsoft-rewards-script:4 \
+            .
+
+      - name: Trivy scan
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          image-ref: ghcr.io/dimarazb/microsoft-rewards-script:4
+          format: table
+          exit-code: 1
+          severity: CRITICAL,HIGH
+
+      - name: Push image
+        run: |
+          docker push ghcr.io/dimarazb/microsoft-rewards-script:4
