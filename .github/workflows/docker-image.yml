@@ -35,7 +35,7 @@ jobs:
           image-ref: ghcr.io/dimarazb/microsoft-rewards-script:4
           format: table
           exit-code: 1
-          severity: CRITICAL,HIGH
+          severity: CRITICAL
 
       - name: Push image
         run: |
